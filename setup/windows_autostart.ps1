@@ -206,6 +206,13 @@ $settings = New-ScheduledTaskSettingsSet `
     -RestartCount 999 `
     -RestartInterval (New-TimeSpan -Minutes 1)
 
+$existingTask = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
+if ($existingTask -and $existingTask.State -eq "Running") {
+    Write-Host "Stopping existing scheduled task instance: $TaskName"
+    Stop-ScheduledTask -TaskName $TaskName
+    Start-Sleep -Seconds 2
+}
+
 if ($AtLogOn) {
     Register-ScheduledTask `
         -TaskName $TaskName `
