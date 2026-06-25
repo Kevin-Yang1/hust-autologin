@@ -92,7 +92,7 @@ cd /path/to/hust-autologin
 bash setup/linux_autostart.sh --run-now
 ```
 
-脚本会创建 `~/.config/systemd/user/hust-autologin.service`，账号密码写到 `~/.config/hust-autologin/env`，权限为 `600`。
+脚本会创建 `~/.config/systemd/user/hust-autologin.service`，账号密码写到 `~/.config/hust-autologin/env`，权限为 `600`。运行日志写到项目目录下的 `logs/hust_autologin.log`。
 
 注意：这个脚本创建的是 systemd user service。默认情况下，它会在该 Linux 用户登录后自动运行；如果希望机器开机后、用户还没登录也运行，需要额外启用 linger：
 

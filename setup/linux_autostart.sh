@@ -9,6 +9,7 @@ set -euo pipefail
 #
 # The password is written to a user-only config file under
 # ~/.config/hust-autologin. Keep that file permission at 600.
+# Runtime logs are written to the project logs/ directory.
 
 task_name="hust-autologin"
 interval="30"
@@ -96,7 +97,6 @@ fi
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 tool_dir="$(cd -- "$script_dir/.." && pwd)"
 login_script="$tool_dir/HUSTAutologin.py"
-repo_dir="$(cd -- "$tool_dir/../.." && pwd)"
 
 if [[ ! -f "$login_script" ]]; then
     echo "Cannot find HUSTAutologin.py beside this setup script." >&2
@@ -128,7 +128,7 @@ shell_quote() {
 
 config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
 config_dir="$config_home/hust-autologin"
-log_dir="$config_dir/logs"
+log_dir="$tool_dir/logs"
 env_file="$config_dir/env"
 runner="$config_dir/run_autologin_linux.sh"
 service_dir="$config_home/systemd/user"
@@ -164,7 +164,7 @@ After=default.target
 
 [Service]
 Type=simple
-WorkingDirectory=$repo_dir
+WorkingDirectory=$tool_dir
 ExecStart=/usr/bin/env bash $(shell_quote "$runner")
 Restart=always
 RestartSec=10
@@ -175,7 +175,12 @@ EOF
 
 systemctl --user daemon-reload
 if [[ "$run_now" == "1" ]]; then
-    systemctl --user enable --now "$task_name.service"
+    systemctl --user enable "$task_name.service"
+    if systemctl --user is-active --quiet "$task_name.service"; then
+        systemctl --user restart "$task_name.service"
+    else
+        systemctl --user start "$task_name.service"
+    fi
 else
     systemctl --user enable "$task_name.service"
 fi
