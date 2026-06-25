@@ -13,6 +13,7 @@ HUST 校园网自动登录脚本。目标是只提供校园网账号和明文密
 - `HUSTAutologin.py`: 日常入口，Windows / Linux 都可用。
 - `HUSTAutologin_linux.py`: 兼容旧入口，内部调用同一份核心逻辑。
 - `src/hust_autologin/core.py`: 实际实现，包含 portal 探测、`pageInfo`、RSA 加密和守护循环。
+- `setup/windows_autostart.cmd`: Windows 双击配置入口。
 - `setup/windows_autostart.ps1`: Windows 任务计划程序一键配置脚本。
 - `setup/linux_autostart.sh`: Linux systemd user service 一键配置脚本。
 - `logs/`: 运行日志目录，已在仓库忽略规则中排除。
@@ -60,6 +61,10 @@ python HUSTAutologin.py --once --user-id 你的学号 --password 你的密码
 ## 一键自启动
 
 Windows PowerShell：
+
+最简单方式：双击运行 `setup/windows_autostart.cmd`。它会请求管理员权限，并打开一个 PowerShell 窗口继续配置。
+
+也可以手动运行：
 
 ```powershell
 cd <path-to-hust-autologin>

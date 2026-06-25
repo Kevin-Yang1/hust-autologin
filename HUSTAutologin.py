@@ -66,6 +66,8 @@ from pathlib import Path
 #
 # 一键配置开机/登录自启:
 #   Windows:
+#     双击 setup\windows_autostart.cmd
+#     或手动运行:
 #     powershell -ExecutionPolicy Bypass -File .\setup\windows_autostart.ps1 -RunNow
 #     默认创建开机启动任务；需要输入 Windows 账户密码，不是 PIN。
 #     如只想登录后启动，可加 -AtLogOn。
