@@ -184,7 +184,7 @@ exit `$LASTEXITCODE
 "@
 Set-Content -LiteralPath $runnerScript -Value $runnerContent -Encoding UTF8
 
-$runLevel = "LeastPrivilege"
+$runLevel = "Limited"
 if ($UseHighestPrivileges) {
     $runLevel = "Highest"
 }
