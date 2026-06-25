@@ -59,7 +59,7 @@ from pathlib import Path
 #   CAMPUS_QUERY_STRING        已知 queryString，支持原始串或已编码串
 #   CAMPUS_LOGIN_URL           显式指定登录接口；默认按 portal 域名推导
 #   CAMPUS_PASSWORD_MODE       plain / password-mac / reverse-password-mac
-#   CAMPUS_LOG_DIR             日志目录，默认 scripts/hust_autologin/logs
+#   CAMPUS_LOG_DIR             日志目录，默认项目目录下的 logs/
 #
 # 正常情况下不需要再配置 LOGIN_URL 或 PASSWORD_HASH。
 # 脚本会自动探测登录页，调用 pageInfo 获取公钥，并从明文密码生成加密 password。

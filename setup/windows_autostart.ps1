@@ -83,7 +83,7 @@ function Test-IsAdministrator {
 }
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$toolDir = Split-Path -Parent $scriptDir
+$toolDir = (Resolve-Path -LiteralPath (Split-Path -Parent $scriptDir)).Path
 $loginScript = Join-Path $toolDir "HUSTAutologin.py"
 if (-not (Test-Path -LiteralPath $loginScript)) {
     throw "Cannot find HUSTAutologin.py beside this setup script."
@@ -132,7 +132,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 $configDir = Join-Path $env:APPDATA "HUSTAutologin"
-$logDir = Join-Path $configDir "logs"
+$logDir = Join-Path $toolDir "logs"
 New-Item -ItemType Directory -Force -Path $configDir | Out-Null
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 

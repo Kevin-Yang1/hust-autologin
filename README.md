@@ -63,6 +63,7 @@ python HUSTAutologin.py --once --user-id 你的学号 --password 你的密码
 Windows PowerShell：
 
 最简单方式：双击运行 `setup/windows_autostart.cmd`。它会请求管理员权限，并打开一个 PowerShell 窗口继续配置。
+一键配置后的计划任务也会把运行日志写到项目目录下的 `logs/hust_autologin.log`。
 
 也可以手动运行：
 
@@ -75,6 +76,8 @@ powershell -ExecutionPolicy Bypass -File .\setup\windows_autostart.ps1 -RunNow
 
 - 校园网密码：用于登录校园网，以当前 Windows 用户可解密的 DPAPI SecureString 存到 `%APPDATA%\HUSTAutologin`。
 - Windows 账户密码：用于让任务计划程序在用户未登录时运行；这里要输入账户密码，不是 PIN / Windows Hello。
+
+配置文件和生成的 runner 仍保存在 `%APPDATA%\HUSTAutologin`；运行日志统一写到项目目录下的 `logs/`。
 
 如果只想登录后启动，可以加 `-AtLogOn`：
 
