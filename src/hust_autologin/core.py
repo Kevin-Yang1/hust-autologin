@@ -841,7 +841,6 @@ def loop_guard(
     portal_entry_url: str | None,
 ) -> None:
     logger.info("进入守护循环，检测间隔 %d 秒。按 Ctrl+C 退出。", interval)
-    last_login_success_time: float | None = None
     check_count = 0
     while True:
         try:
@@ -855,15 +854,8 @@ def loop_guard(
                     )
             else:
                 logger.warning("检测到掉线，开始自动登录…")
-                if ensure_online_with_retry(session, config, portal_entry_url):
-                    last_login_success_time = time.time()
-                else:
+                if not ensure_online_with_retry(session, config, portal_entry_url):
                     logger.error("本轮重试未能恢复联网")
-
-            if last_login_success_time and (time.time() - last_login_success_time) > 6 * 3600:
-                logger.info("超过 6 小时，主动刷新登录…")
-                ensure_online_with_retry(session, config, portal_entry_url)
-                last_login_success_time = time.time()
         except KeyboardInterrupt:
             logger.info("收到中断信号，退出守护循环。")
             break
